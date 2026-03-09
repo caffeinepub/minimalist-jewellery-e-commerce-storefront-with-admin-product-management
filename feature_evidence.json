@@ -1,0 +1,271 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-create-a-cohesive-minimalist-luxury-ui-theme-across-the-app-using-a-clean-white-beige-palette-elegant-serif-headings-modern-sans-serif-body-text-generous-whitespace-subtle-hover-states-and-smooth-micro-animations-ensure-the-design-is-mobile-first-and-fully-responsive",
+      "featureTitle": "Create a cohesive minimalist luxury UI theme across the app using a clean white + beige palette, elegant serif headings, modern sans-serif body text, generous whitespace, subtle hover states, and smooth micro-animations; ensure the design is mobile-first and fully responsive.",
+      "files": [
+        "frontend/src/components/layout/AppLayout.tsx",
+        "frontend/src/index.css",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-admin-seller-authentication-and-authorization-using-internet-identity-require-login-for-the-admin-dashboard-restrict-product-create-update-delete-actions-to-an-admin-allowlist-of-principals-stored-in-backend",
+      "featureTitle": "Implement admin/seller authentication and authorization using Internet Identity: require login for the Admin Dashboard; restrict product create/update/delete actions to an admin allowlist of principals stored in backend.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/auth/AdminRouteGuard.tsx",
+        "frontend/src/components/auth/LoginButton.tsx",
+        "frontend/src/pages/admin/AdminDashboardPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-support-product-image-upload-for-admins-allow-attaching-multiple-images-to-a-product-via-the-admin-dashboard-and-render-those-images-on-the-storefront-store-uploaded-images-on-the-internet-computer-in-canister-and-serve-them-back-to-the-frontend-via-a-backend-http-interface-or-query-endpoints-include-reasonable-file-type-size-validation-and-clear-error-messaging",
+      "featureTitle": "Support product image upload for admins: allow attaching multiple images to a product via the Admin Dashboard and render those images on the storefront. Store uploaded images on the Internet Computer (in-canister) and serve them back to the frontend via a backend HTTP interface or query endpoints; include reasonable file type/size validation and clear error messaging.",
+      "files": [
+        "frontend/src/components/products/ProductImage.tsx",
+        "frontend/src/pages/admin/AdminDashboardPage.tsx",
+        "frontend/src/pages/product/ProductDetailPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-the-homepage-ui-with-hero-banner-featuring-a-large-jewellery-image-featured-products-section-category-section-rings-necklaces-earrings-bracelets-testimonials-section-instagram-style-gallery-preview-and-a-footer-with-contact-social-links",
+      "featureTitle": "Build the Homepage UI with: hero banner featuring a large jewellery image, featured products section, category section (Rings/Necklaces/Earrings/Bracelets), testimonials section, Instagram-style gallery preview, and a footer with contact + social links.",
+      "files": [
+        "frontend/src/components/products/FeaturedProducts.tsx",
+        "frontend/src/pages/home/HomePage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-the-shop-page-with-a-responsive-grid-layout-category-filter-rings-necklaces-earrings-bracelets-sort-by-price-ascending-descending-and-an-add-to-cart-action-per-product",
+      "featureTitle": "Build the Shop page with a responsive grid layout, category filter (Rings/Necklaces/Earrings/Bracelets), sort by price (ascending/descending), and an Add to cart action per product.",
+      "files": [
+        "frontend/src/components/products/ProductCard.tsx",
+        "frontend/src/hooks/useCart.ts",
+        "frontend/src/pages/shop/ShopPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-the-product-detail-page-that-includes-large-image-gallery-with-zoom-product-description-price-add-to-cart-reviews-section-ui-and-related-products-section-populated-from-the-catalog-e-g-same-category",
+      "featureTitle": "Build the Product Detail page that includes: large image gallery with zoom, product description, price, Add to cart, reviews section UI, and related products section populated from the catalog (e.g., same category).",
+      "files": [
+        "frontend/src/components/products/ImageZoom.tsx",
+        "frontend/src/components/products/RelatedProducts.tsx",
+        "frontend/src/pages/product/ProductDetailPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-a-cart-page-with-editable-quantities-remove-item-and-total-price-calculation-cart-state-should-persist-across-page-refreshes-in-the-browser",
+      "featureTitle": "Implement a Cart page with editable quantities, remove item, and total price calculation; cart state should persist across page refreshes in the browser.",
+      "files": [
+        "frontend/src/components/cart/CartLineItem.tsx",
+        "frontend/src/components/layout/HeaderNav.tsx",
+        "frontend/src/pages/cart/CartPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-8"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-a-checkout-page-with-a-shipping-form-validated-inputs-and-a-payment-integration-placeholder-that-is-clearly-marked-as-stripe-ready-without-performing-real-payment-processing",
+      "featureTitle": "Implement a Checkout page with a shipping form (validated inputs) and a payment integration placeholder that is clearly marked as \"Stripe ready\" without performing real payment processing.",
+      "files": [
+        "frontend/src/pages/checkout/CheckoutPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-9"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-an-admin-dashboard-ui-that-allows-admins-to-create-edit-and-delete-products-fields-must-include-title-name-description-price-category-selection-and-image-upload-the-dashboard-must-remain-simple-clean-and-consistent-with-the-overall-minimalist-aesthetic",
+      "featureTitle": "Build an Admin Dashboard UI that allows admins to create, edit, and delete products; fields must include title/name, description, price, category selection, and image upload; the dashboard must remain simple, clean, and consistent with the overall minimalist aesthetic.",
+      "files": [
+        "frontend/src/components/admin/ProductEditorDialog.tsx",
+        "frontend/src/components/admin/ProductsTable.tsx",
+        "frontend/src/pages/admin/AdminDashboardPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-10"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-performance-and-ux-enhancements-smooth-route-section-loading-states-subtle-page-element-transitions-image-lazy-loading-for-product-grids-and-galleries-and-user-friendly-error-states-for-failed-network-calls",
+      "featureTitle": "Add performance and UX enhancements: smooth route/section loading states, subtle page/element transitions, image lazy loading for product grids and galleries, and user-friendly error states for failed network calls.",
+      "files": [
+        "frontend/src/components/products/ProductCard.tsx",
+        "frontend/src/pages/product/ProductDetailPage.tsx",
+        "frontend/src/pages/shop/ShopPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-11"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-basic-seo-accessibility-foundations-per-page-document-titles-and-meta-descriptions-semantic-headings-accessible-form-labels-keyboard-navigable-controls-and-meaningful-alt-text-for-product-images-fallback-if-not-provided",
+      "featureTitle": "Add basic SEO/accessibility foundations: per-page document titles and meta descriptions, semantic headings, accessible form labels, keyboard navigable controls, and meaningful alt text for product images (fallback if not provided).",
+      "files": [
+        "frontend/index.html",
+        "frontend/src/components/seo/Seo.tsx",
+        "frontend/src/index.css",
+        "frontend/src/pages/cart/CartPage.tsx",
+        "frontend/src/pages/checkout/CheckoutPage.tsx",
+        "frontend/src/pages/home/HomePage.tsx",
+        "frontend/src/pages/product/ProductDetailPage.tsx",
+        "frontend/src/pages/shop/ShopPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-12"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-provide-a-production-ready-project-structure-and-an-in-repo-readme-that-explains-local-development-building-deploying-to-the-internet-computer-and-how-to-configure-the-initial-admin-principal-s",
+      "featureTitle": "Provide a production-ready project structure and an in-repo README that explains local development, building, deploying to the Internet Computer, and how to configure the initial admin principal(s).",
+      "files": [
+        "frontend/README.md",
+        "frontend/src/pages/admin/AdminDashboardPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-13"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

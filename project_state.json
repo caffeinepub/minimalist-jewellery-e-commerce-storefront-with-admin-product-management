@@ -1,0 +1,156 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Build a modern minimalist jewellery e-commerce web app with full storefront, cart/checkout, product pages, and an admin/seller dashboard for product uploads; full-stack Next.js with Supabase/Firebase, cloud image storage, auth, SEO, and production-ready structure.",
+  "architectural_notes": [
+    "Prefer Next.js for the React framework.",
+    "Use Supabase or Firebase for database + authentication.",
+    "Store product images in cloud storage (e.g., Supabase Storage/Firebase Storage).",
+    "Checkout includes Stripe integration placeholder (Stripe-ready, not full payment implementation yet)."
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- Minimalist jewellery brand wordmark logo in black on transparent background (logo-wordmark.dim_512x256.png)\n- Soft luxury hero banner photo-style image of jewellery on beige/white background with ample whitespace (hero-banner.dim_2400x1200.png)\n- Set of four minimalist category tiles/icons for Rings, Necklaces, Earrings, Bracelets in neutral beige/black line style (category-icons-set.dim_1024x256.png)",
+  "existing_features": [
+    {
+      "id": "feature-create-a-cohesive-minimalist-luxury-ui-theme-across-the-app-using-a-clean-white-beige-palette-elegant-serif-headings-modern-sans-serif-body-text-generous-whitespace-subtle-hover-states-and-smooth-micro-animations-ensure-the-design-is-mobile-first-and-fully-responsive",
+      "title": "Create a cohesive minimalist luxury UI theme across the app using a clean white + beige palette, elegant serif headings, modern sans-serif body text, generous whitespace, subtle hover states, and smooth micro-animations; ensure the design is mobile-first and fully responsive.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-admin-seller-authentication-and-authorization-using-internet-identity-require-login-for-the-admin-dashboard-restrict-product-create-update-delete-actions-to-an-admin-allowlist-of-principals-stored-in-backend",
+      "title": "Implement admin/seller authentication and authorization using Internet Identity: require login for the Admin Dashboard; restrict product create/update/delete actions to an admin allowlist of principals stored in backend.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-support-product-image-upload-for-admins-allow-attaching-multiple-images-to-a-product-via-the-admin-dashboard-and-render-those-images-on-the-storefront-store-uploaded-images-on-the-internet-computer-in-canister-and-serve-them-back-to-the-frontend-via-a-backend-http-interface-or-query-endpoints-include-reasonable-file-type-size-validation-and-clear-error-messaging",
+      "title": "Support product image upload for admins: allow attaching multiple images to a product via the Admin Dashboard and render those images on the storefront. Store uploaded images on the Internet Computer (in-canister) and serve them back to the frontend via a backend HTTP interface or query endpoints; include reasonable file type/size validation and clear error messaging.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-the-homepage-ui-with-hero-banner-featuring-a-large-jewellery-image-featured-products-section-category-section-rings-necklaces-earrings-bracelets-testimonials-section-instagram-style-gallery-preview-and-a-footer-with-contact-social-links",
+      "title": "Build the Homepage UI with: hero banner featuring a large jewellery image, featured products section, category section (Rings/Necklaces/Earrings/Bracelets), testimonials section, Instagram-style gallery preview, and a footer with contact + social links.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-the-shop-page-with-a-responsive-grid-layout-category-filter-rings-necklaces-earrings-bracelets-sort-by-price-ascending-descending-and-an-add-to-cart-action-per-product",
+      "title": "Build the Shop page with a responsive grid layout, category filter (Rings/Necklaces/Earrings/Bracelets), sort by price (ascending/descending), and an Add to cart action per product.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-the-product-detail-page-that-includes-large-image-gallery-with-zoom-product-description-price-add-to-cart-reviews-section-ui-and-related-products-section-populated-from-the-catalog-e-g-same-category",
+      "title": "Build the Product Detail page that includes: large image gallery with zoom, product description, price, Add to cart, reviews section UI, and related products section populated from the catalog (e.g., same category).",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-cart-page-with-editable-quantities-remove-item-and-total-price-calculation-cart-state-should-persist-across-page-refreshes-in-the-browser",
+      "title": "Implement a Cart page with editable quantities, remove item, and total price calculation; cart state should persist across page refreshes in the browser.",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-checkout-page-with-a-shipping-form-validated-inputs-and-a-payment-integration-placeholder-that-is-clearly-marked-as-stripe-ready-without-performing-real-payment-processing",
+      "title": "Implement a Checkout page with a shipping form (validated inputs) and a payment integration placeholder that is clearly marked as \"Stripe ready\" without performing real payment processing.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-an-admin-dashboard-ui-that-allows-admins-to-create-edit-and-delete-products-fields-must-include-title-name-description-price-category-selection-and-image-upload-the-dashboard-must-remain-simple-clean-and-consistent-with-the-overall-minimalist-aesthetic",
+      "title": "Build an Admin Dashboard UI that allows admins to create, edit, and delete products; fields must include title/name, description, price, category selection, and image upload; the dashboard must remain simple, clean, and consistent with the overall minimalist aesthetic.",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-performance-and-ux-enhancements-smooth-route-section-loading-states-subtle-page-element-transitions-image-lazy-loading-for-product-grids-and-galleries-and-user-friendly-error-states-for-failed-network-calls",
+      "title": "Add performance and UX enhancements: smooth route/section loading states, subtle page/element transitions, image lazy loading for product grids and galleries, and user-friendly error states for failed network calls.",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-basic-seo-accessibility-foundations-per-page-document-titles-and-meta-descriptions-semantic-headings-accessible-form-labels-keyboard-navigable-controls-and-meaningful-alt-text-for-product-images-fallback-if-not-provided",
+      "title": "Add basic SEO/accessibility foundations: per-page document titles and meta descriptions, semantic headings, accessible form labels, keyboard navigable controls, and meaningful alt text for product images (fallback if not provided).",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-provide-a-production-ready-project-structure-and-an-in-repo-readme-that-explains-local-development-building-deploying-to-the-internet-computer-and-how-to-configure-the-initial-admin-principal-s",
+      "title": "Provide a production-ready project structure and an in-repo README that explains local development, building, deploying to the Internet Computer, and how to configure the initial admin principal(s).",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Create core storefront pages (Homepage, Shop grid with category filter & price sort, Product detail with image zoom, Cart with quantity edit/remove/total, Checkout with shipping form and Stripe-ready placeholder) with minimalist luxury responsive UI.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Implement Admin/Seller dashboard with secure authentication to create/edit/delete products, upload images, set price/description/category.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Set up backend database and cloud storage for products and images (Supabase or Firebase) and integrate with frontend.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Add UX/performance enhancements: smooth animations, subtle hover effects, loading animations, image lazy loading, form validation, and error handling.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Add SEO optimization, production-ready folder structure, and README deployment instructions.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Implement a backend product catalog API in the single Motoko actor: create/read/update/delete jewellery products with fields: id, name/title, description, price, category (Rings/Necklaces/Earrings/Bracelets), images (one or more), createdAt/updatedAt; persist data in stable storage so it survives upgrades.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Minimalist jewellery e-commerce storefront with admin product management",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

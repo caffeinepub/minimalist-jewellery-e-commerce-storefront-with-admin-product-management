@@ -1,0 +1,306 @@
+{
+  "kind": "build_request",
+  "title": "Minimalist jewellery e-commerce storefront with admin product management",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Create a cohesive minimalist luxury UI theme across the app using a clean white + beige palette, elegant serif headings, modern sans-serif body text, generous whitespace, subtle hover states, and smooth micro-animations; ensure the design is mobile-first and fully responsive.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Clean white and beige color palette",
+          "Elegant serif headings with modern sans-serif body text",
+          "Luxury, premium, soft aesthetic",
+          "Lots of white space",
+          "Smooth animations and subtle hover effects",
+          "Fully responsive (mobile-first)",
+          "Minimal UI, no clutter"
+        ]
+      },
+      "acceptanceCriteria": [
+        "All pages share consistent typography (serif headings, sans body), spacing, and color tokens (white/beige).",
+        "Layouts adapt correctly on mobile, tablet, and desktop without horizontal scrolling.",
+        "Hover/focus/active states are present for interactive elements and are visually subtle (no cluttered UI)."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Implement a backend product catalog API in the single Motoko actor: create/read/update/delete jewellery products with fields: id, name/title, description, price, category (Rings/Necklaces/Earrings/Bracelets), images (one or more), createdAt/updatedAt; persist data in stable storage so it survives upgrades.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Admin can: Upload new jewellery products ... Add price ... Add description ... Select category ... Edit or delete products",
+          "Make it scalable so more products can be added without breaking layout"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend exposes methods to list products, fetch product by id, create product, update product, and delete product.",
+        "Products include category and price and can store multiple image references.",
+        "Data remains available after canister upgrade (stable storage used)."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Implement admin/seller authentication and authorization using Internet Identity: require login for the Admin Dashboard; restrict product create/update/delete actions to an admin allowlist of principals stored in backend.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Secure login system for seller/admin",
+          "Authentication for admin login",
+          "Admin Dashboard (Important)"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Unauthenticated users cannot access admin routes/screens (they are redirected to a login prompt).",
+        "Backend rejects non-admin principals for product mutation calls.",
+        "At least one initial admin principal can be configured (e.g., via backend init/default list or an admin-management method guarded by existing admin)."
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Support product image upload for admins: allow attaching multiple images to a product via the Admin Dashboard and render those images on the storefront. Store uploaded images on the Internet Computer (in-canister) and serve them back to the frontend via a backend HTTP interface or query endpoints; include reasonable file type/size validation and clear error messaging.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Upload product images",
+          "High-quality image display with zoom feature",
+          "Image lazy loading",
+          "Error handling",
+          "Form validation"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Admin can upload at least 1 image per product and see previews before saving.",
+        "Backend stores image bytes and returns a stable URL or identifier that the frontend can render in <img>.",
+        "Uploading invalid types/sizes shows a user-friendly validation error and does not crash the app.",
+        "Storefront product pages successfully display uploaded images."
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Build the Homepage UI with: hero banner featuring a large jewellery image, featured products section, category section (Rings/Necklaces/Earrings/Bracelets), testimonials section, Instagram-style gallery preview, and a footer with contact + social links.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Homepage: Hero banner with large jewellery image",
+          "Featured products section",
+          "Categories (Rings, Necklaces, Earrings, Bracelets)",
+          "Testimonials section",
+          "Instagram-style gallery preview",
+          "Footer with contact and social links"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Homepage contains all listed sections and remains visually minimalist and responsive.",
+        "Featured products are populated from backend product data.",
+        "Categories are clickable and navigate to a filtered shop view."
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "text": "Build the Shop page with a responsive grid layout, category filter (Rings/Necklaces/Earrings/Bracelets), sort by price (ascending/descending), and an Add to cart action per product.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Shop Page: Grid layout",
+          "Filter by category",
+          "Sort by price",
+          "Add to cart button"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Products render in a responsive grid with consistent spacing.",
+        "Changing category filter updates the grid results.",
+        "Sorting by price asc/desc updates ordering deterministically.",
+        "Each product card provides an Add to cart control that adds the correct product."
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "text": "Build the Product Detail page that includes: large image gallery with zoom, product description, price, Add to cart, reviews section UI, and related products section populated from the catalog (e.g., same category).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Product Page: Large image gallery with zoom",
+          "Product description",
+          "Price",
+          "Add to cart",
+          "Reviews section",
+          "Related products"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Product page loads product data by id and renders name/description/price/images.",
+        "Image gallery supports zoom interaction on the main image.",
+        "Related products render (excluding the current product) and are navigable.",
+        "Reviews section is present as UI (can be placeholder if persistence is not implemented in this build)."
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "text": "Implement a Cart page with editable quantities, remove item, and total price calculation; cart state should persist across page refreshes in the browser.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Cart Page: Editable quantities",
+          "Remove item",
+          "Total price calculation"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Users can increment/decrement quantities and see totals update immediately.",
+        "Users can remove items from the cart.",
+        "Cart contents persist after refresh (e.g., local storage)."
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "text": "Implement a Checkout page with a shipping form (validated inputs) and a payment integration placeholder that is clearly marked as \"Stripe ready\" without performing real payment processing.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Checkout Page: Shipping form",
+          "Payment integration placeholder (Stripe ready)",
+          "Form validation",
+          "Error handling"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Shipping form includes basic fields (name, email, address, city, postal code, country) with validation and inline error messages.",
+        "Checkout shows an explicit payment placeholder section labeled as Stripe-ready.",
+        "Submitting the form without required fields shows validation errors and does not proceed."
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "text": "Build an Admin Dashboard UI that allows admins to create, edit, and delete products; fields must include title/name, description, price, category selection, and image upload; the dashboard must remain simple, clean, and consistent with the overall minimalist aesthetic.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Admin Dashboard (Important)",
+          "Dashboard should be simple and clean",
+          "Admin can: Upload new jewellery products ... Edit or delete products"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Admin can view a list/table of products with edit/delete controls.",
+        "Admin can create a product and upload images, then see it appear in the Shop/Product pages.",
+        "Admin can edit product fields and changes reflect on storefront after refresh.",
+        "Admin can delete a product and it no longer appears in storefront lists."
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "text": "Add performance and UX enhancements: smooth route/section loading states, subtle page/element transitions, image lazy loading for product grids and galleries, and user-friendly error states for failed network calls.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Smooth loading animations",
+          "Image lazy loading",
+          "Error handling",
+          "Smooth animations and subtle hover effects"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Product lists and product detail pages show loading skeletons/spinners while data loads.",
+        "Images in grids are lazy-loaded and do not cause layout jumps (use reserved aspect ratio).",
+        "Failures to load products or upload images show a clear, minimal error UI with a retry option where applicable."
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "text": "Add basic SEO/accessibility foundations: per-page document titles and meta descriptions, semantic headings, accessible form labels, keyboard navigable controls, and meaningful alt text for product images (fallback if not provided).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "SEO optimized",
+          "Clean and maintainable code"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Each core route sets a distinct title and meta description.",
+        "Forms have associated labels and show accessible error messages.",
+        "Primary interactions are reachable via keyboard and have visible focus styling.",
+        "Product images include alt text derived from product title when not explicitly provided."
+      ]
+    },
+    {
+      "id": "REQ-13",
+      "text": "Provide a production-ready project structure and an in-repo README that explains local development, building, deploying to the Internet Computer, and how to configure the initial admin principal(s).",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Production-ready folder structure",
+          "Include README instructions for deployment",
+          "Clean and maintainable code"
+        ]
+      },
+      "acceptanceCriteria": [
+        "README contains steps to run locally, deploy, and set/administer admin principal(s).",
+        "README describes how product images are stored/served and any size limitations.",
+        "Project structure separates backend logic, frontend pages/components, and shared types cleanly."
+      ]
+    }
+  ],
+  "constraints": [
+    "Backend must be implemented in a single Motoko actor (no additional backend services).",
+    "Do not use Next.js, Supabase, Firebase, or external databases/cloud storage; implement persistence in the Motoko canister using stable storage.",
+    "Authentication must use Internet Identity (no third-party auth providers).",
+    "Do not edit files under frontend/src/components/ui or other frontend immutable paths specified by the platform; only compose/reuse those components.",
+    "No real Stripe integration in this build—checkout must be a placeholder only."
+  ],
+  "nonGoals": [
+    "Implementing real payment processing or order settlement.",
+    "Real-time features (websockets/live chat/push notifications).",
+    "Integrations with external social media APIs (Instagram API) beyond a static gallery-style preview UI.",
+    "Advanced inventory/fulfillment/shipping rate calculations."
+  ],
+  "imageRequirements": {
+    "required": [
+      "Minimalist jewellery brand wordmark logo in black on transparent background (logo-wordmark.dim_512x256.png)",
+      "Soft luxury hero banner photo-style image of jewellery on beige/white background with ample whitespace (hero-banner.dim_2400x1200.png)",
+      "Set of four minimalist category tiles/icons for Rings, Necklaces, Earrings, Bracelets in neutral beige/black line style (category-icons-set.dim_1024x256.png)"
+    ],
+    "edits": []
+  }
+}

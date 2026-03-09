@@ -1,0 +1,191 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-11T07:48:17.569Z",
+  "summary": "Diff adds a Motoko backend actor with product CRUD and admin checks, plus a TanStack Router-based frontend with storefront pages, cart UI, admin product editor/table, image upload UI (single image), loading/error components, and header/footer. Several BuildRequest requirements are either not evidenced in the diff or appear only partially implemented (notably product categories/multiple images/stable storage/README/SEO).",
+  "missing_requirements": [
+    {
+      "id": "REQ-1",
+      "requirement": "Cohesive minimalist luxury UI theme across the app (white+beige palette, serif headings, sans body, subtle micro-animations) and fully responsive.",
+      "reason": "Some components show serif headings and transitions, but the diff does not evidence global theme tokens/typography setup across all pages or comprehensive responsive styling; key styling may exist in omitted files, so only partial evidence is visible.",
+      "evidence": [
+        "frontend/src/components/layout/HeaderNav.tsx",
+        "frontend/src/components/common/MotionFade.tsx",
+        "frontend/src/components/products/ProductCard.tsx"
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "requirement": "Backend product catalog API with fields: id, title/name, description, price, category (Rings/Necklaces/Earrings/Bracelets), images (one or more), createdAt/updatedAt; persisted in stable storage across upgrades.",
+      "reason": "The Product type shown lacks category and supports only a single image field (not multiple). No stable storage (stable vars / preupgrade/postupgrade) is evidenced in the truncated backend snippet.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "requirement": "Admin allowlist of principals stored in backend; restrict product mutations to admins; require login for Admin Dashboard using Internet Identity; configure at least one initial admin principal.",
+      "reason": "Frontend route guard/login prompt is present, and backend checks `AccessControl.isAdmin`, but the diff does not show how the admin allowlist is stored/persisted, nor how an initial admin principal is configured/managed.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/components/auth/AdminRouteGuard.tsx"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "requirement": "Admin can upload multiple product images; store image bytes in-canister and serve back via HTTP/query endpoints; validate type/size with user-friendly errors; storefront renders uploaded images.",
+      "reason": "Uploader validates type/size and prepares an `ExternalBlob`, but the UI and backend types indicate only a single image per product (`image`, not `images`). The backend storage/serving interface for in-canister image bytes is not evidenced beyond `MixinStorage` include and use of `Storage.ExternalBlob`.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/components/admin/ProductImageUploader.tsx",
+        "frontend/src/components/admin/ProductEditorDialog.tsx"
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "requirement": "Homepage includes hero banner, featured products, category section (clickable to filtered shop), testimonials, Instagram-style gallery preview, and footer with contact + social links.",
+      "reason": "Footer is present, and FeaturedProducts component exists, but the diff does not include the HomePage implementation showing hero banner, categories section with navigation, testimonials, or Instagram-style gallery preview (may be in omitted files).",
+      "evidence": [
+        "frontend/src/components/layout/Footer.tsx",
+        "frontend/src/components/products/FeaturedProducts.tsx",
+        "frontend/src/App.tsx"
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "requirement": "Shop page: responsive grid, category filter, sort by price asc/desc, and Add to cart per product.",
+      "reason": "ProductCard includes Add to cart, but the ShopPage implementation (filtering/sorting) is not shown in the diff snippet (may be in omitted files).",
+      "evidence": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/products/ProductCard.tsx"
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "requirement": "Product Detail page: image gallery with zoom, description/price/add-to-cart, reviews UI placeholder, related products by same category (excluding current).",
+      "reason": "Image zoom component exists and RelatedProducts exists, but RelatedProducts does not use category filtering (it ignores the `category` prop) and simply selects other products. ProductDetailPage and reviews UI are not shown in the diff snippet.",
+      "evidence": [
+        "frontend/src/components/products/ImageZoom.tsx",
+        "frontend/src/components/products/RelatedProducts.tsx",
+        "frontend/src/App.tsx"
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "requirement": "Cart page with editable quantities, remove item, total calculation, and persistence across refresh (e.g., localStorage).",
+      "reason": "CartLineItem supports quantity updates/removal and shows totals, but no evidence is shown for cart persistence across refresh (implementation likely in `useCart`, not included here).",
+      "evidence": [
+        "frontend/src/components/cart/CartLineItem.tsx",
+        "frontend/src/components/layout/HeaderNav.tsx"
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "requirement": "Checkout page with validated shipping form (name, email, address, city, postal code, country) and clearly marked Stripe-ready placeholder; validation errors inline.",
+      "reason": "CheckoutPage implementation is not shown in the diff snippet, so shipping form fields/validation and Stripe-ready placeholder are not evidenced.",
+      "evidence": [
+        "frontend/src/App.tsx"
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "requirement": "Admin Dashboard: list/table products with edit/delete; create/edit/delete products with fields including title/name, description, price, category selection, and image upload.",
+      "reason": "Products table and editor dialog exist with name/description/price and image upload, but no category selection is evidenced. Also image handling appears single-image only.",
+      "evidence": [
+        "frontend/src/components/admin/ProductsTable.tsx",
+        "frontend/src/components/admin/ProductEditorDialog.tsx",
+        "frontend/src/components/admin/ProductImageUploader.tsx"
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "requirement": "Loading states, subtle transitions, lazy loading with reserved aspect ratio, and friendly error states with retry for failed network calls.",
+      "reason": "Skeletons, error state with retry, transitions, and lazy-loading are evidenced for product grids/cards, but it is not shown for all required surfaces (e.g., upload failures with retry, route-level transitions, product detail loading) beyond the provided components; implementation may be elsewhere.",
+      "evidence": [
+        "frontend/src/components/common/LoadingSkeleton.tsx",
+        "frontend/src/components/common/ErrorState.tsx",
+        "frontend/src/components/common/MotionFade.tsx",
+        "frontend/src/components/products/ProductCard.tsx",
+        "frontend/src/components/auth/AdminRouteGuard.tsx"
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "requirement": "SEO/accessibility foundations: per-page titles/meta descriptions, semantic headings, accessible labels/errors, keyboard navigation, meaningful alt text fallback.",
+      "reason": "Some accessibility features are present (labels, aria-labels, focus-visible classes, alt attributes), but there is no evidence of per-page document titles/meta descriptions being set. Alt-text fallback logic is not evidenced (alt is passed explicitly from product.name in places, but not shown as a general fallback mechanism).",
+      "evidence": [
+        "frontend/src/components/admin/ProductEditorDialog.tsx",
+        "frontend/src/components/cart/CartLineItem.tsx",
+        "frontend/src/components/products/ProductCard.tsx",
+        "frontend/src/components/products/ImageZoom.tsx"
+      ]
+    },
+    {
+      "id": "REQ-13",
+      "requirement": "In-repo README explaining local dev/build/deploy to IC and how to configure initial admin principals; describe image storage/limits; clean project structure.",
+      "reason": "No README changes are shown in the diff summary, and no documentation about admin principal configuration or image storage/limits is evidenced.",
+      "evidence": []
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "User profile system (get/save caller user profile) with permission checks.",
+      "reason": "BuildRequest focuses on storefront + admin product management and II-based admin auth; user profile CRUD is not requested.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/components/auth/ProfileSetup.tsx"
+      ]
+    },
+    {
+      "description": "Footer attribution link to caffeine.ai with UTM parameters.",
+      "reason": "Not requested as part of homepage/footer requirements (only contact + social links were requested).",
+      "evidence": [
+        "frontend/src/components/layout/Footer.tsx"
+      ]
+    }
+  ],
+  "confidence": 0.66,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/README.md",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/components/admin/ProductEditorDialog.tsx",
+    "frontend/src/components/admin/ProductImageUploader.tsx",
+    "frontend/src/components/admin/ProductsTable.tsx",
+    "frontend/src/components/auth/AdminRouteGuard.tsx",
+    "frontend/src/components/auth/LoginButton.tsx",
+    "frontend/src/components/auth/ProfileSetup.tsx",
+    "frontend/src/components/cart/CartLineItem.tsx",
+    "frontend/src/components/common/ErrorState.tsx",
+    "frontend/src/components/common/LoadingSkeleton.tsx",
+    "frontend/src/components/common/MotionFade.tsx",
+    "frontend/src/components/layout/AppLayout.tsx",
+    "frontend/src/components/layout/Footer.tsx",
+    "frontend/src/components/layout/HeaderNav.tsx",
+    "frontend/src/components/products/FeaturedProducts.tsx",
+    "frontend/src/components/products/ImageZoom.tsx",
+    "frontend/src/components/products/ProductCard.tsx",
+    "frontend/src/components/products/ProductImage.tsx",
+    "frontend/src/components/products/RelatedProducts.tsx",
+    "frontend/src/components/seo/Seo.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useCart.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/index.css",
+    "frontend/src/main.tsx",
+    "frontend/src/pages/admin/AdminDashboardPage.tsx",
+    "frontend/src/pages/cart/CartPage.tsx",
+    "frontend/src/pages/checkout/CheckoutPage.tsx",
+    "frontend/src/pages/home/HomePage.tsx",
+    "frontend/src/pages/product/ProductDetailPage.tsx",
+    "frontend/src/pages/shop/ShopPage.tsx",
+    "frontend/src/utils/urlParams.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}

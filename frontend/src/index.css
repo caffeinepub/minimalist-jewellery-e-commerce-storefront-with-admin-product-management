@@ -1,0 +1,145 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --radius: 0.25rem;
+        /* Minimalist luxury palette - warm whites and soft beiges */
+        --background: 0.99 0.005 40;
+        --foreground: 0.25 0.01 40;
+        --card: 1 0 0;
+        --card-foreground: 0.25 0.01 40;
+        --popover: 1 0 0;
+        --popover-foreground: 0.25 0.01 40;
+        --primary: 0.30 0.015 40;
+        --primary-foreground: 0.99 0.005 40;
+        --secondary: 0.95 0.008 45;
+        --secondary-foreground: 0.30 0.015 40;
+        --muted: 0.96 0.006 42;
+        --muted-foreground: 0.55 0.008 40;
+        --accent: 0.93 0.012 38;
+        --accent-foreground: 0.30 0.015 40;
+        --destructive: 0.55 0.20 25;
+        --destructive-foreground: 0.99 0.005 40;
+        --border: 0.90 0.008 40;
+        --input: 0.92 0.008 40;
+        --ring: 0.70 0.010 40;
+        --chart-1: 0.646 0.222 41.116;
+        --chart-2: 0.6 0.118 184.704;
+        --chart-3: 0.398 0.07 227.392;
+        --chart-4: 0.828 0.189 84.429;
+        --chart-5: 0.769 0.188 70.08;
+    }
+
+    .dark {
+        --background: 0.18 0.008 40;
+        --foreground: 0.96 0.005 40;
+        --card: 0.22 0.010 40;
+        --card-foreground: 0.96 0.005 40;
+        --popover: 0.20 0.010 40;
+        --popover-foreground: 0.96 0.005 40;
+        --primary: 0.88 0.008 42;
+        --primary-foreground: 0.25 0.01 40;
+        --secondary: 0.28 0.012 38;
+        --secondary-foreground: 0.96 0.005 40;
+        --muted: 0.30 0.010 40;
+        --muted-foreground: 0.65 0.008 40;
+        --accent: 0.35 0.012 38;
+        --accent-foreground: 0.96 0.005 40;
+        --destructive: 0.60 0.18 25;
+        --destructive-foreground: 0.96 0.005 40;
+        --border: 0.32 0.010 40;
+        --input: 0.35 0.010 40;
+        --ring: 0.60 0.010 40;
+    }
+
+    * {
+        @apply border-border;
+    }
+    
+    body {
+        @apply bg-background text-foreground;
+        font-feature-settings: "kern" 1, "liga" 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Elegant serif headings */
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Playfair Display', 'Georgia', serif;
+        font-weight: 400;
+        letter-spacing: -0.01em;
+    }
+
+    /* Modern sans body */
+    body, p, span, div, button, input, textarea, select {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    }
+}
+
+@layer utilities {
+    /* Smooth transitions */
+    .transition-smooth {
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Focus visible styling */
+    .focus-visible-ring {
+        @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background;
+    }
+
+    /* Subtle hover lift */
+    .hover-lift {
+        @apply transition-smooth hover:-translate-y-0.5 hover:shadow-md;
+    }
+
+    /* Image aspect ratio containers */
+    .aspect-product {
+        aspect-ratio: 3 / 4;
+    }
+
+    .aspect-hero {
+        aspect-ratio: 21 / 9;
+    }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: oklch(var(--muted));
+}
+
+::-webkit-scrollbar-thumb {
+    background: oklch(var(--muted-foreground) / 0.3);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: oklch(var(--muted-foreground) / 0.5);
+}
+
+/* Loading skeleton animation */
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+.animate-shimmer {
+    animation: shimmer 2s infinite linear;
+    background: linear-gradient(
+        to right,
+        oklch(var(--muted)) 0%,
+        oklch(var(--muted) / 0.5) 50%,
+        oklch(var(--muted)) 100%
+    );
+    background-size: 1000px 100%;
+}

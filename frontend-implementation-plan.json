@@ -1,0 +1,434 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Minimalist jewellery storefront + admin dashboard (frontend-only plan)",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Establish a cohesive minimalist luxury, mobile-first, fully responsive UI theme (white/beige palette, serif headings, sans body, whitespace, subtle states, micro-animations).",
+      "acceptanceCriteria": [
+        "All pages share consistent typography (serif headings, sans body), spacing, and color tokens (white/beige).",
+        "Layouts adapt correctly on mobile, tablet, and desktop without horizontal scrolling.",
+        "Hover/focus/active states are present for interactive elements and are visually subtle (no cluttered UI)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "create",
+          "description": "Create global theme tokens (white/beige palette), typography rules (serif headings + sans body), spacing defaults, focus-visible styling, and subtle transition utilities to enforce the minimalist luxury aesthetic across the app."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Extend Tailwind theme with brand color tokens (white/beige neutrals), font families (serif headings + sans body), and animation/transition presets to support micro-animations and subtle hover states."
+        },
+        {
+          "path": "frontend/src/components/layout/AppLayout.tsx",
+          "operation": "create",
+          "description": "Create a responsive layout wrapper (header/nav + main container + footer) that applies consistent spacing and typography hierarchy across all pages."
+        },
+        {
+          "path": "frontend/src/components/ui/MotionFade.tsx",
+          "operation": "create",
+          "description": "Create a small wrapper component for subtle page/section fade/slide transitions (no heavy motion), used throughout the app for micro-animations."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Require Internet Identity login for Admin Dashboard access and show appropriate unauthorized/login UI states (frontend).",
+      "acceptanceCriteria": [
+        "Unauthenticated users cannot access admin routes/screens (they are redirected to a login prompt).",
+        "Backend rejects non-admin principals for product mutation calls.",
+        "At least one initial admin principal can be configured (e.g., via backend init/default list or an admin-management method guarded by existing admin)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/auth/LoginButton.tsx",
+          "operation": "create",
+          "description": "Create a login/logout button using Internet Identity via the existing auth hook; clear cached queries on logout. Use the selected authorization component guidance for auth UX. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/useAuthz.ts",
+          "operation": "create",
+          "description": "Add frontend authz helpers that call backend role/admin checks (e.g., is admin) and normalize authorization errors for UI display. Use the selected authorization component guidance. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/auth/AdminRouteGuard.tsx",
+          "operation": "create",
+          "description": "Create a route guard for admin-only screens: if not authenticated, show a login prompt; if authenticated but not admin, show an AccessDenied screen. Use the selected authorization component guidance. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/admin/AdminDashboardPage.tsx",
+          "operation": "create",
+          "description": "Create the admin dashboard page shell that is wrapped by the AdminRouteGuard and uses the app theme/layout; integrate login prompt and access denied states as required."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "create",
+          "description": "Create the top-level app component wiring router + AppLayout + auth UI (e.g., LoginButton in header) and ensure admin routes are guarded."
+        },
+        {
+          "path": "frontend/src/router.tsx",
+          "operation": "create",
+          "description": "Create and register routes for Home, Shop, Product Detail, Cart, Checkout, and Admin Dashboard; ensure the Admin Dashboard route is wrapped with AdminRouteGuard."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Support admin product image upload with previews and storefront rendering using IC-hosted blobs (frontend integration).",
+      "acceptanceCriteria": [
+        "Admin can upload at least 1 image per product and see previews before saving.",
+        "Backend stores image bytes and returns a stable URL or identifier that the frontend can render in <img>.",
+        "Uploading invalid types/sizes shows a user-friendly validation error and does not crash the app.",
+        "Storefront product pages successfully display uploaded images."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/products/ProductImageUploader.tsx",
+          "operation": "create",
+          "description": "Create an admin-only multi-image upload UI with client-side validation (type/size), preview thumbnails, removal before save, and clear inline error messaging. Use the selected blob-storage component (ExternalBlob) for upload preparation/progress. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/products/ProductImage.tsx",
+          "operation": "create",
+          "description": "Create a reusable product image renderer that uses blob-storage ExternalBlob.getDirectURL() when available, sets alt text fallbacks, and supports reserved aspect ratio + lazy loading. Use the selected blob-storage component. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/products/ProductGallery.tsx",
+          "operation": "create",
+          "description": "Create a product gallery component that renders multiple images and coordinates zoom behavior on the primary image while keeping layout stable and responsive."
+        },
+        {
+          "path": "frontend/src/pages/admin/AdminDashboardPage.tsx",
+          "operation": "modify",
+          "description": "Integrate ProductImageUploader into create/edit flows, including previews and progress UI; ensure errors are handled and surfaced minimally and clearly. Use blob-storage ExternalBlob support. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/product/ProductDetailPage.tsx",
+          "operation": "create",
+          "description": "Create the product detail page and render uploaded images via ProductGallery/ProductImage, using direct URLs from ExternalBlob where applicable (blob-storage). Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Build the Homepage UI (hero, featured products, categories, testimonials, gallery preview, footer) and wire categories to filtered shop.",
+      "acceptanceCriteria": [
+        "Homepage contains all listed sections and remains visually minimalist and responsive.",
+        "Featured products are populated from backend product data.",
+        "Categories are clickable and navigate to a filtered shop view."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/public/assets/generated/logo-wordmark.dim_512x256.png",
+          "operation": "create",
+          "description": "Add generated asset and ensure it is used in the header/footer branding: frontend/public/assets/generated/logo-wordmark.dim_512x256.png."
+        },
+        {
+          "path": "frontend/public/assets/generated/hero-banner.dim_2400x1200.png",
+          "operation": "create",
+          "description": "Add generated asset and ensure it is used as the homepage hero image: frontend/public/assets/generated/hero-banner.dim_2400x1200.png."
+        },
+        {
+          "path": "frontend/public/assets/generated/category-icons-set.dim_1024x256.png",
+          "operation": "create",
+          "description": "Add generated asset and ensure it is used for the homepage category section visuals: frontend/public/assets/generated/category-icons-set.dim_1024x256.png."
+        },
+        {
+          "path": "frontend/src/pages/home/HomePage.tsx",
+          "operation": "create",
+          "description": "Implement the homepage sections (hero using the generated hero banner, featured products from backend, categories linking to Shop with category filter, testimonials, static Instagram-style gallery preview, and footer with contact/social)."
+        },
+        {
+          "path": "frontend/src/components/products/FeaturedProducts.tsx",
+          "operation": "create",
+          "description": "Create a featured products section component that loads products from the backend and renders a minimalist horizontal/grid preview consistent with the theme."
+        },
+        {
+          "path": "frontend/src/router.tsx",
+          "operation": "modify",
+          "description": "Wire the HomePage route and ensure category links navigate to the Shop page with the selected category reflected in the UI state (e.g., via query params)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Build a Shop page with responsive product grid, category filter, price sorting, and Add to cart per product.",
+      "acceptanceCriteria": [
+        "Products render in a responsive grid with consistent spacing.",
+        "Changing category filter updates the grid results.",
+        "Sorting by price asc/desc updates ordering deterministically.",
+        "Each product card provides an Add to cart control that adds the correct product."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/shop/ShopPage.tsx",
+          "operation": "create",
+          "description": "Create the Shop page that loads products from the backend, supports category filter (Rings/Necklaces/Earrings/Bracelets), price sort asc/desc, and renders a responsive grid."
+        },
+        {
+          "path": "frontend/src/components/products/ProductCard.tsx",
+          "operation": "create",
+          "description": "Create a minimalist product card with image (lazy loaded), title, price, subtle hover state, and Add to cart action; ensure consistent spacing for scalable catalogs."
+        },
+        {
+          "path": "frontend/src/hooks/useProducts.ts",
+          "operation": "create",
+          "description": "Create React Query hooks for fetching product lists/details and provide normalized loading/error states to support Shop and other pages."
+        },
+        {
+          "path": "frontend/src/hooks/useCart.ts",
+          "operation": "create",
+          "description": "Create a cart state hook with add/update/remove helpers and localStorage persistence for use across Shop/Product/Cart/Checkout."
+        },
+        {
+          "path": "frontend/src/router.tsx",
+          "operation": "modify",
+          "description": "Wire the ShopPage route and ensure it is reachable from navigation and from homepage category links."
+        }
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "summary": "Build Product Detail page with zoomable gallery, description, price, add-to-cart, reviews UI section, and related products from same category.",
+      "acceptanceCriteria": [
+        "Product page loads product data by id and renders name/description/price/images.",
+        "Image gallery supports zoom interaction on the main image.",
+        "Related products render (excluding the current product) and are navigable.",
+        "Reviews section is present as UI (can be placeholder if persistence is not implemented in this build)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/product/ProductDetailPage.tsx",
+          "operation": "modify",
+          "description": "Implement product detail data loading by id, render title/description/price, Add to cart, reviews placeholder UI, and related products list filtered by category (excluding current)."
+        },
+        {
+          "path": "frontend/src/components/products/ImageZoom.tsx",
+          "operation": "create",
+          "description": "Create an accessible zoom interaction for the main product image (e.g., click-to-zoom / hover magnify on desktop) with keyboard support and graceful mobile behavior."
+        },
+        {
+          "path": "frontend/src/components/products/RelatedProducts.tsx",
+          "operation": "create",
+          "description": "Create a related products component that reuses ProductCard, excludes the current product, and links to other product detail routes."
+        },
+        {
+          "path": "frontend/src/router.tsx",
+          "operation": "modify",
+          "description": "Wire the ProductDetail route (by product id) and ensure navigation from Shop cards and related products works."
+        }
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "summary": "Implement a Cart page with quantity edits, remove, total calculation, and persistence across refresh.",
+      "acceptanceCriteria": [
+        "Users can increment/decrement quantities and see totals update immediately.",
+        "Users can remove items from the cart.",
+        "Cart contents persist after refresh (e.g., local storage)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/cart/CartPage.tsx",
+          "operation": "create",
+          "description": "Create the Cart page UI showing cart line items with quantity controls, remove action, and total price; use the persisted cart hook so refresh retains state."
+        },
+        {
+          "path": "frontend/src/components/cart/CartLineItem.tsx",
+          "operation": "create",
+          "description": "Create a reusable cart line item component with accessible quantity stepper controls and subtle hover/focus styling consistent with the theme."
+        },
+        {
+          "path": "frontend/src/router.tsx",
+          "operation": "modify",
+          "description": "Wire the CartPage route and ensure Add to cart flows from Shop/Product navigate or update header cart indicator as appropriate."
+        },
+        {
+          "path": "frontend/src/components/layout/HeaderNav.tsx",
+          "operation": "create",
+          "description": "Create a minimalist header navigation (including cart link and optional cart item count) and include it in AppLayout."
+        }
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "summary": "Implement a Checkout page with validated shipping form and a clearly labeled Stripe-ready payment placeholder (no real payments).",
+      "acceptanceCriteria": [
+        "Shipping form includes basic fields (name, email, address, city, postal code, country) with validation and inline error messages.",
+        "Checkout shows an explicit payment placeholder section labeled as Stripe-ready.",
+        "Submitting the form without required fields shows validation errors and does not proceed."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/checkout/CheckoutPage.tsx",
+          "operation": "create",
+          "description": "Create the Checkout page with a validated shipping form (inline errors) and a clearly marked 'Stripe ready' payment placeholder; do not implement any real payment processing."
+        },
+        {
+          "path": "frontend/src/components/forms/ValidatedField.tsx",
+          "operation": "create",
+          "description": "Create a small reusable form field wrapper to standardize labels, inputs, help text, and accessible error messaging across the checkout and admin forms."
+        },
+        {
+          "path": "frontend/src/router.tsx",
+          "operation": "modify",
+          "description": "Wire the CheckoutPage route and ensure it is reachable from the Cart page (e.g., checkout CTA)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "summary": "Build a minimalist Admin Dashboard for product create/edit/delete with fields (name, description, price, category, image upload) consistent with overall theme.",
+      "acceptanceCriteria": [
+        "Admin can view a list/table of products with edit/delete controls.",
+        "Admin can create a product and upload images, then see it appear in the Shop/Product pages.",
+        "Admin can edit product fields and changes reflect on storefront after refresh.",
+        "Admin can delete a product and it no longer appears in storefront lists."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/admin/AdminDashboardPage.tsx",
+          "operation": "modify",
+          "description": "Implement product list/table UI (view/edit/delete), plus create/edit form with fields (name, description, price, category) and image upload integration; keep UI clean and consistent with theme. Use blob-storage ExternalBlob support for image handling. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/admin/ProductEditorDialog.tsx",
+          "operation": "create",
+          "description": "Create a focused create/edit product dialog or panel using composed shadcn-ui primitives (e.g., Dialog, Button, Input, Textarea, Select) for a consistent minimalist form UI. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/admin/ProductsTable.tsx",
+          "operation": "create",
+          "description": "Create a products table/list component with subtle actions, confirmation for delete, and clear empty/error/loading states; reuse theme and motion components."
+        },
+        {
+          "path": "frontend/src/hooks/useAdminProducts.ts",
+          "operation": "create",
+          "description": "Create admin-focused React Query mutations for create/update/delete and ensure query invalidation keeps Shop/Home/Detail pages in sync after changes."
+        },
+        {
+          "path": "frontend/src/router.tsx",
+          "operation": "modify",
+          "description": "Ensure the admin dashboard route is reachable from navigation for authenticated admins only (e.g., conditionally show an Admin link in the header)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "summary": "Add loading states, subtle transitions, image lazy loading, and friendly error states with retry for network failures.",
+      "acceptanceCriteria": [
+        "Product lists and product detail pages show loading skeletons/spinners while data loads.",
+        "Images in grids are lazy-loaded and do not cause layout jumps (use reserved aspect ratio).",
+        "Failures to load products or upload images show a clear, minimal error UI with a retry option where applicable."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/ui/LoadingSkeleton.tsx",
+          "operation": "create",
+          "description": "Create minimalist skeleton/spinner components for grids, cards, and page sections; keep animations subtle and consistent with the luxury theme."
+        },
+        {
+          "path": "frontend/src/components/ui/ErrorState.tsx",
+          "operation": "create",
+          "description": "Create a minimal error UI component that can show a message and optional retry action for failed queries/uploads."
+        },
+        {
+          "path": "frontend/src/components/products/ProductCard.tsx",
+          "operation": "modify",
+          "description": "Add reserved aspect ratio containers and image lazy loading behavior to prevent layout shifts in the product grid."
+        },
+        {
+          "path": "frontend/src/pages/shop/ShopPage.tsx",
+          "operation": "modify",
+          "description": "Integrate loading skeletons, empty states, and ErrorState with retry for product list fetching; apply subtle page/section transitions via MotionFade."
+        },
+        {
+          "path": "frontend/src/pages/product/ProductDetailPage.tsx",
+          "operation": "modify",
+          "description": "Integrate loading skeletons and friendly error UI with retry for product detail fetching; ensure gallery images are lazy loaded appropriately where possible."
+        },
+        {
+          "path": "frontend/src/components/products/ProductImageUploader.tsx",
+          "operation": "modify",
+          "description": "Add upload progress UI and graceful error states (including validation errors and backend failures) with clear messaging and no crashes. Use blob-storage progress support. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "summary": "Add basic SEO and accessibility foundations (titles/meta, semantic structure, labels, keyboard navigation, alt text fallbacks).",
+      "acceptanceCriteria": [
+        "Each core route sets a distinct title and meta description.",
+        "Forms have associated labels and show accessible error messages.",
+        "Primary interactions are reachable via keyboard and have visible focus styling.",
+        "Product images include alt text derived from product title when not explicitly provided."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/index.html",
+          "operation": "modify",
+          "description": "Add a baseline meta description and ensure the document head is ready for per-route overrides (without introducing new routes)."
+        },
+        {
+          "path": "frontend/src/components/seo/Seo.tsx",
+          "operation": "create",
+          "description": "Create a small SEO helper component to set per-page title and meta description for core routes (Home, Shop, Product, Cart, Checkout, Admin)."
+        },
+        {
+          "path": "frontend/src/pages/home/HomePage.tsx",
+          "operation": "modify",
+          "description": "Add semantic headings, ensure hero/category images have meaningful alt text, and set per-page title/meta via Seo component."
+        },
+        {
+          "path": "frontend/src/pages/shop/ShopPage.tsx",
+          "operation": "modify",
+          "description": "Ensure filter/sort controls are properly labeled, keyboard accessible, and set per-page title/meta via Seo component."
+        },
+        {
+          "path": "frontend/src/pages/product/ProductDetailPage.tsx",
+          "operation": "modify",
+          "description": "Ensure product images use alt text derived from product title when not provided; ensure zoom controls are keyboard accessible; set per-page title/meta via Seo component."
+        },
+        {
+          "path": "frontend/src/pages/cart/CartPage.tsx",
+          "operation": "modify",
+          "description": "Add accessible labels for quantity controls and remove buttons; set per-page title/meta via Seo component."
+        },
+        {
+          "path": "frontend/src/pages/checkout/CheckoutPage.tsx",
+          "operation": "modify",
+          "description": "Ensure shipping form fields have associated labels, inline accessible error messages, and set per-page title/meta via Seo component."
+        },
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Add visible focus styles (focus-visible) and ensure interactive elements meet keyboard navigation expectations while remaining subtle and minimalist."
+        }
+      ]
+    },
+    {
+      "id": "REQ-13",
+      "summary": "Provide production-ready structure documentation and README guidance for local dev/deploy and initial admin principal configuration (frontend documentation only).",
+      "acceptanceCriteria": [
+        "README contains steps to run locally, deploy, and set/administer admin principal(s).",
+        "README describes how product images are stored/served and any size limitations.",
+        "Project structure separates backend logic, frontend pages/components, and shared types cleanly."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/README.md",
+          "operation": "create",
+          "description": "Add README covering local development, build, deploy (as applicable), how Internet Identity login works in the UI, how initial admin configuration is supplied from the frontend (including any required URL secret parameter flow), and how product images are uploaded/rendered (blob-storage direct URL usage and any client-side size/type limits). Verify the selected authorization and blob-storage components' usage instructions before implementing referenced flows."
+        },
+        {
+          "path": "frontend/src/pages/admin/AdminDashboardPage.tsx",
+          "operation": "modify",
+          "description": "Add a small in-app note or help section (admin-only) pointing to README guidance for initial admin configuration and troubleshooting authorization errors."
+        }
+      ]
+    }
+  ]
+}
